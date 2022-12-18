@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:21:54 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/10 19:43:51 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	t_ptl	*tool;
+	char			*dst;
+	unsigned int	i;
+	int				ln;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	ln = ft_strlen(s);
+	dst = malloc(ln + 1);
+	if (!dst)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		dst[i] = (*f)(i, s[i]);
+		i++;
 	}
-	exec_cmd(tool);
-	return (0);
+	dst[i] = 0;
+	return (dst);
 }

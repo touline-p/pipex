@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/07/10 11:25:57 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/11 13:41:26 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-
-int	main(int ac, char **av)
+unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 {
-	t_ptl	*tool;
+	unsigned int	i;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	i = 0;
+	while (src[i] && i + 1 < size)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		dest[i] = src[i];
+		i++;
 	}
-	exec_cmd(tool);
-	return (0);
+	if (i < size)
+		dest[i] = '\0';
+	while (src[i])
+		i++;
+	return (i);
 }

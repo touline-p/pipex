@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:14:01 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/08 13:33:20 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+int	ft_isalnum(int c)
 {
-	t_ptl	*tool;
-
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
+	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90)
+		|| (c >= 97 && c <= 122))
+		return (8);
 	return (0);
 }

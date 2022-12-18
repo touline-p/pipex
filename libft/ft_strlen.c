@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:21:46 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/10 19:42:27 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+size_t	ft_strlen(const char *s)
 {
-	t_ptl	*tool;
+	char	*h;
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	h = (char *)s;
+	while (*h)
+		h++;
+	return (h - s);
 }

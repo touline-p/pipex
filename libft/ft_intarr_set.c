@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_intarr_set.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/12/18 14:16:48 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/12/18 14:16:50 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+int	*ft_intarr_set(int *tab, int value, size_t size)
 {
-	t_ptl	*tool;
-
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	while (size--)
+		tab[size] = value;
+	return (tab);
 }

@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   perr_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/12/18 22:58:52 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/12/19 00:44:02 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av)
+void	*free_pipes_arr_n_per(int **trash, int signal, char *msg)
 {
-	t_ptl	*tool;
+	perror(msg);
+	while (signal--)
+		free(trash[signal]);
+	free(trash);
+	return (NULL);
+}
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+void	*per_ret_null(char *str)
+{
+	perror(str);
+	return (NULL);
+}
+
+void	*free_t_cmd_n_per(t_cmd *cmd, char *msg)
+{
+	ft_free_split(cmd->args);
+	free(cmd->absolute_path);
+	free(cmd);
+	perror(msg);
+	return (NULL);
 }

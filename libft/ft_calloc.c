@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 14:20:14 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/09 12:36:57 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h" 
 
-int	main(int ac, char **av)
+void	*ft_calloc(size_t n, size_t size)
 {
-	t_ptl	*tool;
+	void	*ptr;
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	if (size == 0)
+		return (ft_strdup(""));
+	if (n > UINT_MAX / size)
+		return (NULL);
+	ptr = (void *)malloc(n * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, n * size);
+	return (ptr);
 }

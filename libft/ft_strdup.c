@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:21:25 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/08 13:44:50 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h" 
 
-int	main(int ac, char **av)
+char	*ft_strdup(const char *src)
 {
-	t_ptl	*tool;
+	char	*dst;
+	char	*tmp;
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	tmp = (char *)src;
+	while (*tmp)
+		tmp++;
+	dst = malloc(tmp - src + 1);
+	if (!dst)
+		return (NULL);
+	tmp = dst;
+	while (*src)
+		*(tmp++) = *(src++);
+	*tmp = 0;
+	return (dst);
 }

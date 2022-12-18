@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:55:07 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/10 19:57:36 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+int	ft_memcmp(const void *s1, const void *s2, size_t length)
 {
-	t_ptl	*tool;
+	size_t	i;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	i = 0;
+	if (length == 0)
+		return (0);
+	while (length--)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		if (((unsigned char *)s1)[i] != ((unsigned char *)s2)[i])
+			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+		i++;
 	}
-	exec_cmd(tool);
 	return (0);
 }

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:20:39 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/08 13:50:03 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+static	void	ft_putnbr(int n, int fd)
 {
-	t_ptl	*tool;
+	char	c;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	if (n > 9)
+		ft_putnbr(n / 10, fd);
+	c = ('0' + n % 10);
+	write(fd, &c, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	int		sign;
+	char	c;
+
+	sign = 1;
+	if (n < 0)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		write(fd, "-", 1);
+		sign = -1;
 	}
-	exec_cmd(tool);
-	return (0);
+	if (n > 9 || n < -9)
+		ft_putnbr(n / (10 * sign), fd);
+	c = ('0' + n % 10 * sign);
+	write(fd, &c, 1);
 }

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:52:20 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/08 18:47:40 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	*ft_memmove(void *dst, const void *src, size_t length)
 {
-	t_ptl	*tool;
+	int	i;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	if (dst == src)
+		return (dst);
+	if (dst > src)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		i = length - 1;
+		while (i >= 0)
+		{
+			*(char *)(dst + i) = *(char *)(src + i);
+			i--;
+		}
 	}
-	exec_cmd(tool);
-	return (0);
+	else
+	{
+		i = 0;
+		while (i < (int)length)
+		{
+			*(char *)(dst + i) = *(char *)(src + i);
+			i++;
+		}
+	}
+	return (dst);
 }

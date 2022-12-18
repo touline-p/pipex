@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/07/10 23:57:35 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/11 13:03:36 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	t_ptl	*tool;
+	size_t	i;
+	size_t	k;
+	size_t	len_base;
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	i = 0;
+	k = 0;
+	while (i < size && dst[i])
+		i++;
+	if (i + 1 > size)
+		return (size + ft_strlen(src));
+	len_base = i;
+	while (size > i + 1 && k < ft_strlen(src))
+		dst[i++] = src [k++];
+	if (i < size)
+		dst[i] = 0;
+	return (len_base + ft_strlen(src));
 }

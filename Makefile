@@ -2,7 +2,7 @@ NAME	=	pipex
 
 CC		=	cc
 
-CFLAGS	=	-Werror -Wall -Wextra
+CFLAGS	=	-Werror -Wall -Wextra #-L$(DDIR) -lft
 
 AR		= 	ar
 
@@ -10,8 +10,13 @@ ARFLAGS =	rcs
 
 SANITY	=	-g -fsanitize=address
 
-FILES	=	 
-SDIR	=	src/
+FILES	=	main.c \
+create_tool.c \
+init_pipes.c \
+perr_utils.c \
+init_commands.c \
+
+SDIR	=	srcs/
 SRCS	=	$(addprefix $(SDIR), $(FILES))
 
 HDIR	=	includes/
@@ -29,22 +34,31 @@ DPPS	=	$(addprefix $(DDIR), $(LIBS))
 
 all	:	$(NAME)
 
-$(NAME)	:	$(OBJS) $(DPPS) $(HEADERS) Makefile 
-	$(CC) $(CFLAGS) $(NAME) -o $(OBJS) -L$(DDIR) 
+$(NAME)	:	$(OBJS) $(DPPS) $(HEADERS) 
+	$(CC) $(CFLAGS) -o $(NAME)  $(OBJS) -lft -L$(DDIR)
 
-obj/%.o	:	src/%.c $(HEADERS) Makefile
-	$(CC) $(CFLAGS) -I $(HDIR) -o $@ -c $<
+obj/%.o	:	srcs/%.c $(ODIR) $(DPPS) $(HEADERS) 
+	$(CC) $(CFLAGS) -I $(HDIR) -o $@ -c $< 
 
-$(DDPS)	:
-	cd	$(DDIR)
-	make $(LIBS)
-	cd ..
+$(DDIR)	:
+	mkdir $(DDIR)
+	
+$(ODIR)	:
+	mkdir $(ODIR)
+
+$(DPPS)	:	$(DDIR)
+	make -C libft
+	mv libft/libft.a $(DPPS)
+	cp libft/libft.h includes/libft.h
 
 clean	:
-	rm -rf $(OBJS)
+	-rm -rf $(OBJS)
+	make -C libft clean
+	-rm $(DPPS)
 
 fclean	:	clean
-	rm $(NAME)
+	-rm $(NAME)
+	make -C libft fclean
 
 re	:	fclean all
 

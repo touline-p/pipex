@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:19:52 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/08 18:48:28 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	*ft_memcpy(void *dst, const void *src, size_t length)
 {
-	t_ptl	*tool;
+	char	*tmp;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	if (dst == src)
+		return (dst);
+	tmp = dst;
+	while (length--)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		*tmp = *((char *)src);
+		tmp++;
+		src++;
 	}
-	exec_cmd(tool);
-	return (0);
+	return (dst);
 }

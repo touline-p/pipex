@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   create_tool.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/12/18 22:58:00 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/12/19 00:44:07 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int ac, char **av)
+t_ptl	*init_tool(int ac, char **av)
 {
-	t_ptl	*tool;
+	t_ptl	*dst;
 
-	tool = init_tool(ac, av);
-	if (!tool)
-	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
-	}
-	exec_cmd(tool);
-	return (0);
+	dst = malloc(sizeof(t_ptl *));
+	dst->pipes = init_pipes(ac);
+	dst->commands = init_commands(ac, av);
+	dst->fd_in = open(av[1], O_RDONLY);
+	dst->fd_ot = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	return (dst);
 }

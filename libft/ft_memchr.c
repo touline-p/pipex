@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:19:49 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/10 18:22:56 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	*ft_memchr(void *buf, int ch, size_t length)
 {
-	t_ptl	*tool;
+	unsigned char	*dst;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	dst = buf;
+	while (length && *dst != (unsigned char)ch)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		dst++;
+		length--;
 	}
-	exec_cmd(tool);
-	return (0);
+	if (!length)
+		return ((void *)0);
+	return ((void *)dst);
 }

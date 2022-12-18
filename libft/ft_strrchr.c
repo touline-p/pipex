@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 00:44:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/11/08 13:22:05 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/11/09 13:48:13 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "pipex.h"
-
-int	main(int ac, char **av)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_ptl	*tool;
+	char	*tmp;
+	char	*pin;
 
-	tool = init_tool(ac, av);
-	if (!tool)
+	if ((unsigned char)c == 0)
+		return ((char *)(s + ft_strlen(s)));
+	pin = NULL;
+	tmp = ft_strchr(s, c);
+	while (tmp != NULL)
 	{
-		ft_putendl_fd("Error initializing t_ptl", 2);
-		return (1);
+		pin = (char *)tmp;
+		tmp = ft_strchr(tmp + 1, c);
 	}
-	exec_cmd(tool);
-	return (0);
+	return (pin);
 }
