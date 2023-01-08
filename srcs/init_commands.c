@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 23:17:16 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/08 15:41:59 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/08 16:57:01 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_cmd	**init_commands(int ac, char **av, char **env)
 	t_cmd	**dst;
 	int		i;
 
-	if (ac - 2 < 0)
+	if (ac - 2 <= 0)
 		return (NULL);
 	dst = malloc(sizeof(t_cmd *) * (ac - 2));
 	if (!dst)
