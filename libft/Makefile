@@ -48,6 +48,7 @@ FILES	=	ft_atoi.c \
 	ft_tolower.c \
 	ft_issign.c \
 	ft_toupper.c \
+	ft_strjoin_three.c \
 	ft_intarr_set.c
 	
 HFILES	=	libft.h\

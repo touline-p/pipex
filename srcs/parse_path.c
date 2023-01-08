@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   parse_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 13:21:33 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/05 13:36:27 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2022/12/19 14:26:30 by bpoumeau          #+#    #+#             */
+/*   Updated: 2022/12/19 15:25:41 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "pipex.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char **get_n_split_path(char **env)
 {
-	char	*dst;
-	char	*tmp;
+	int	i;
 
-	dst = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!dst)
-		return (NULL);
-	tmp = dst;
-	while (*s1)
-		*tmp++ = *s1++;
-	while (*s2)
-		*tmp++ = *s2++;
-	*tmp = 0;
-	return (dst);
+	i = -1;
+	while (env[++i])
+		if (!ft_strncmp("PATH", env[i], 4))
+			return (ft_split((env[i]) + 5, ':'));
+	return (NULL);
 }
-
 
