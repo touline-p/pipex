@@ -6,14 +6,14 @@
 #    By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 03:31:03 by bpoumeau          #+#    #+#              #
-#    Updated: 2023/01/09 18:18:05 by bpoumeau         ###   ########lyon.fr    #
+#    Updated: 2023/01/09 15:48:00 by bpoumeau         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
 CC := cc
-FLAGS := -fsanitize=address -g3 -Wall -Wextra -Werror -Iincludes
+FLAGS := -fsanitize=address -Wall -Wextra -Werror -Iincludes
 
 HEADER := includes/pipex.h
 
@@ -58,14 +58,5 @@ re: fclean all
 
 normy:
 	norminette $(SRCS) $(HEADER)
-
-test: $(NAME)
-	./pipex Makefile cat you
-
-test1: $(NAME)
-	./pipex Makefile cat cat you
-
-test2: $(NAME)
-	./pipex Makefile cat cat cat you
 
 .PHONY: all clean fclean re libclean normy

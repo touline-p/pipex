@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/08 17:55:10 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 18:43:29 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,21 @@ int	main(int ac, char **av, char **env)
 {
 	t_ptl	*tool;
 
+	if (ac < 5)
+	{
+		ft_putendl_fd("not enough args", 2);
+		return (1);
+	}
 	tool = init_tool(ac, av, env);
 	if (!tool)
 	{
 		ft_putendl_fd("Error initializing t_ptl", 2);
 		return (1);
 	}
-	test(tool);
-	printf("going to exec\n");
-	if (ac == 4)
-	{
-		printf("it s unic\n");
-		exec_unic_cmd(tool, env);
-	}
-	else
-	{
-		printf("it s plural\n");
-		exec_cmd(tool, env);
-	}
+	exec_cmd(tool, env);
+	clean_t_ptl_ret_null(tool);
 	return (0);
 }
-
 
 void	test(t_ptl *tool)
 {
@@ -68,7 +62,7 @@ void	test(t_ptl *tool)
 void	print_tab(char **tab)
 {
 	int	i;
-	 
+
 	i = 0;
 	while (tab[i])
 	{

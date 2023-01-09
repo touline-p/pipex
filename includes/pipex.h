@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 23:39:48 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/08 17:55:08 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 19:01:41 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 # define PIPEX_H
 
 # include "libft.h"
+# include <signal.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/errno.h>
 # include <sys/wait.h>
 
 typedef struct s_command
 {
+	char	*file_in;
 	char	*absolute_path;
 	char	**args;
 }	t_cmd;
@@ -51,13 +54,12 @@ void	*per_ret_null(char *str);
 void	*free_pipes_arr_n_per(int **trash, int signal, char *msg);
 void	*free_t_cmds_n_per(t_cmd **cmd, int nb_elem, char *msg);
 void	*free_t_cmd_n_per(t_cmd *cmd, char *msg);
-void	*free_t_cmd(t_cmd *cmd);
 
 /**
  * Parse Path
  **/
 
-char **get_n_split_path(char **env);
+char	**get_n_split_path(char **env);
 
 /**
  * exec command
@@ -74,5 +76,6 @@ void	exec_unic_cmd(t_ptl *tool, char **env);
 void	wait_tab_pid(pid_t *tab);
 void	*clean_t_ptl_ret_null(t_ptl *dst);
 void	check_pid(pid_t pid, t_ptl *tool);
+void	free_t_cmd(t_cmd *cmd);
 
 #endif

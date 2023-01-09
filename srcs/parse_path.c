@@ -6,13 +6,13 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 14:26:30 by bpoumeau          #+#    #+#             */
-/*   Updated: 2022/12/19 15:25:41 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 17:54:26 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char **get_n_split_path(char **env)
+char	**get_n_split_path(char **env)
 {
 	int	i;
 
@@ -22,4 +22,3 @@ char **get_n_split_path(char **env)
 			return (ft_split((env[i]) + 5, ':'));
 	return (NULL);
 }
-

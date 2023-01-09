@@ -6,29 +6,27 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 23:17:16 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/08 16:57:01 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 19:06:20 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_cmd	*cmd_creator(void);
-t_cmd	*get_t_cmd(char *str, char **env);
+t_cmd	*cmd_creator(char *name);
+t_cmd	*get_t_cmd(char *str, char **env, char *name);
 
 t_cmd	**init_commands(int ac, char **av, char **env)
 {
 	t_cmd	**dst;
 	int		i;
 
-	if (ac - 2 <= 0)
-		return (NULL);
 	dst = malloc(sizeof(t_cmd *) * (ac - 2));
 	if (!dst)
 		return (per_ret_null("Error allocating commands array"));
 	i = 0;
 	while (i + 2 < ac - 1)
 	{
-		dst[i] = get_t_cmd(av[i + 2], env);
+		dst[i] = get_t_cmd(av[i + 2], env, av[1]);
 		if (!dst[i])
 			return (free_t_cmds_n_per(dst, i, "Error sub allocate t_cmd"));
 		i++;
@@ -37,7 +35,7 @@ t_cmd	**init_commands(int ac, char **av, char **env)
 	return (dst);
 }
 
-t_cmd	*cmd_creator(void)
+t_cmd	*cmd_creator(char *name)
 {
 	t_cmd	*new;
 
@@ -46,6 +44,7 @@ t_cmd	*cmd_creator(void)
 		return (NULL);
 	new->absolute_path = NULL;
 	new->args = NULL;
+	new->file_in = name;
 	return (new);
 }
 
@@ -72,7 +71,6 @@ char	*ft_strjoin_three(char *a, char *b, char *c)
 	dst[ln++] = c[i++];
 	return (dst);
 }
-
 
 char	*get_absolute_path(char *cmd, char **env)
 {
@@ -103,11 +101,11 @@ char	*get_absolute_path(char *cmd, char **env)
 	return (test);
 }
 
-t_cmd	*get_t_cmd(char *str, char **env)
+t_cmd	*get_t_cmd(char *str, char **env, char *file_in)
 {
 	t_cmd	*dst;
 
-	dst = cmd_creator();
+	dst = cmd_creator(file_in);
 	if (!dst)
 		return (per_ret_null("Error allocating t_cmd"));
 	dst->args = ft_split(str, ' ');

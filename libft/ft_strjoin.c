@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:21:33 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/05 13:36:27 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 17:49:22 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	*tmp = 0;
 	return (dst);
 }
-
-

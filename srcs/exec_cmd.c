@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 19:18:37 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/08 17:55:09 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 21:16:42 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ pid_t	child_exec(int *pp_in, int *pp_ot, t_cmd *cmd, char **env)
 		dup2(pp_in[0], STDIN_FILENO);
 		close(pp_ot[0]);
 		dup2(pp_ot[1], STDOUT_FILENO);
+		close(pp_in[0]);
+		close(pp_ot[1]);
 		execve(cmd->absolute_path, cmd->args, env);
+		perror(cmd->absolute_path);
 		exit(errno);
 	}
 	return (pid);
@@ -33,20 +36,29 @@ pid_t	first_exec(int fd_in, int *pp_ot, t_cmd *cmd, char **env)
 {
 	pid_t	pid;
 
+	if (fd_in == -1)
+	{
+		perror(cmd->file_in);
+		return (-2);
+	}
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(fd_in, STDIN_FILENO);
 		close(pp_ot[0]);
 		dup2(pp_ot[1], STDOUT_FILENO);
+		close(fd_in);
+		close(pp_ot[1]);
 		execve(cmd->absolute_path, cmd->args, env);
+		perror(cmd->absolute_path);
 		exit(errno);
 	}
 	return (pid);
 }
+
 pid_t	last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	pid = fork();
 	close(pp_in[1]);
@@ -54,7 +66,10 @@ pid_t	last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env)
 	{
 		dup2(pp_in[0], STDIN_FILENO);
 		dup2(fd_ot, STDOUT_FILENO);
+		close(pp_in[0]);
+		close(fd_ot);
 		execve(cmd->absolute_path, cmd->args, env);
+		perror(cmd->absolute_path);
 		exit(errno);
 	}
 	return (pid);
@@ -63,12 +78,12 @@ pid_t	last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env)
 void	exec_cmd(t_ptl *tool, char **env)
 {
 	int	i;
-	
+
 	i = 0;
-	tool->pid_tab[i] = first_exec(tool->fd_in, tool->pipes[i], 
+	tool->pid_tab[i] = first_exec(tool->fd_in, tool->pipes[i],
 			tool->commands[i], env);
 	check_pid(tool->pid_tab[i++], tool);
-	while (tool->commands[i + 1])	
+	while (tool->commands[i + 1])
 	{
 		tool->pid_tab[i] = child_exec(tool->pipes[i - 1],
 				tool->pipes[i],
@@ -80,19 +95,4 @@ void	exec_cmd(t_ptl *tool, char **env)
 	check_pid(tool->pid_tab[i + 1], tool);
 	tool->pid_tab[i + 1] = 0;
 	wait_tab_pid(tool->pid_tab);
-}
-
-void	exec_unic_cmd(t_ptl *tool, char **env)
-{
-	tool->pid_tab[0] = fork();
-	if (tool->pid_tab[0] == 0)
-	{
-		dup2(tool->fd_in, STDIN_FILENO);
-		dup2(tool->fd_ot, STDOUT_FILENO);
-		execve(tool->commands[0]->absolute_path, tool->commands[0]->args,
-				env);
-		exit(errno);
-	}
-	check_pid(tool->pid_tab[0], tool);
-	waitpid(tool->pid_tab[0], NULL, 0);
 }
