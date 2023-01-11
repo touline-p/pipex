@@ -6,14 +6,11 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 22:58:07 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 18:43:29 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 16:39:12 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	print_tab(char **tab);
-void	test(t_ptl *tool);
 
 int	main(int ac, char **av, char **env)
 {
@@ -32,41 +29,5 @@ int	main(int ac, char **av, char **env)
 	}
 	exec_cmd(tool, env);
 	clean_t_ptl_ret_null(tool);
-	return (0);
-}
-
-void	test(t_ptl *tool)
-{
-	int	i;
-
-	printf("les couples de pipes \n");
-	i = 0;
-	while (tool->pipes[i])
-	{
-		printf("%d, %d\n", tool->pipes[i][0], tool->pipes[i][1]);
-		i++;
-	}
-	printf("les fichiers\n");
-	printf("entrees : %d\nsorties : %d\n", tool->fd_in, tool->fd_ot);
-	printf("les commandes \n");
-	i = 0;
-	while (tool->commands[i])
-	{
-		printf("%s\n", tool->commands[i]->absolute_path);
-		print_tab(tool->commands[i]->args);
-		i++;
-	}
-	printf("%p : tool->commands terminating\n", tool->commands[i]);
-}
-
-void	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		printf("%d : %s\n", i, tab[i]);
-		i++;
-	}
+	exit(0);
 }

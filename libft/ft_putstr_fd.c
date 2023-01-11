@@ -6,7 +6,7 @@
 /*   By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:20:48 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 21:09:17 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:27:18 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	while (*s)
-		write (fd, s++, fd);
+	write(fd, s, ft_strlen(s));
 }

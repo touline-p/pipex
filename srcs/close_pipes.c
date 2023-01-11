@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_pipes.c                                       :+:      :+:    :+:   */
+/*   close_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/18 22:57:56 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/10 19:29:06 by bpoumeau         ###   ########lyon.fr   */
+/*   Created: 2023/01/10 18:53:37 by bpoumeau          #+#    #+#             */
+/*   Updated: 2023/01/11 14:31:16 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	*init_pipes(int ac)
+/**
+ * close pipes is called each time a fork is done. It purpose is to close
+ * all the pipes opened during the init.
+ **/
+
+void	close_pipes(int *pipes_tab)
 {
-	int	*dst;
-	int	nb_pipes;
 	int	i;
 
-	nb_pipes = ac - 3;
-	dst = malloc(sizeof(int) * (nb_pipes * 2 + 1));
-	if (!dst)
-		return (per_ret_null("pipes"));
 	i = 0;
-	while (i < nb_pipes - 1)
+	while (pipes_tab[i])
 	{
-		if (pipe(&dst[i]))
-			return (free_pipes_arr_n_per(dst, "pipes not working"));
-		i += 2;
+		close(pipes_tab[i]);
+		i++;
 	}
-	dst[i] = 0;
-	return (dst);
-}
-
-void	*free_pipes_arr_n_per(int *trash, char *msg)
-{
-	perror(msg);
-	free(trash);
-	return (NULL);
 }

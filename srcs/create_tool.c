@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 22:58:00 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 18:19:24 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 18:07:47 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ t_ptl	*init_tool(int ac, char **av, char **env)
 		return (clean_t_ptl_ret_null(dst));
 	}
 	dst->fd_in = open(av[1], O_RDONLY);
+	if (dst->fd_in == -1)
+		perror(av[1]);
 	dst->fd_ot = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (dst->fd_ot == -1)
+		perror(av[ac - 1]);
 	return (dst);
 }

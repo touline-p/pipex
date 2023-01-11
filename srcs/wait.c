@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:52 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 18:42:43 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 14:47:02 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,6 @@ void	wait_tab_pid(pid_t *tab)
 			waitpid(tab[i], NULL, 0);
 		i++;
 	}
-}
-
-void	clean_int_arr(int **tab)
-{
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
 }
 
 void	free_t_cmd(t_cmd *command)
@@ -71,7 +56,7 @@ void	free_t_cmds(t_cmd **commands)
 
 void	*clean_t_ptl_ret_null(t_ptl *trash)
 {
-	clean_int_arr(trash->pipes);
+	free(trash->pipes);
 	free(trash->pid_tab);
 	free_t_cmds(trash->commands);
 	free(trash);

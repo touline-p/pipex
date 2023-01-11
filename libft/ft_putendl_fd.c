@@ -6,7 +6,7 @@
 /*   By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:20:20 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 21:09:20 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:03:23 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	while (*s)
-		write (fd, s++, fd);
-	write (fd, "\n", fd);
+	write (fd, s, ft_strlen(s));
+	write (fd, "\n", 1);
 }

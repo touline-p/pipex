@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 23:17:16 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 19:06:20 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 18:08:17 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*get_absolute_path(char *cmd, char **env)
 
 	path = get_n_split_path(env);
 	if (!path)
-		return (per_ret_null("Error getting path"));
+		return (ft_strdup(cmd));
 	i = -1;
 	while (path[++i])
 	{
@@ -111,7 +111,9 @@ t_cmd	*get_t_cmd(char *str, char **env, char *file_in)
 	dst->args = ft_split(str, ' ');
 	if (!dst->args)
 		return (free_t_cmd_n_per(dst, "Error spliting args"));
-	dst->absolute_path = get_absolute_path(dst->args[0], env);
+	dst->absolute_path = ft_strdup("");
+	if (*str != 0)
+		dst->absolute_path = get_absolute_path(dst->args[0], env);
 	if (!dst->absolute_path)
 	{
 		ft_free_split(dst->args);

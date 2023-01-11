@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/10 19:19:55 by bpoumeau          #+#    #+#             */
+/*   Updated: 2023/01/11 14:47:04 by bpoumeau         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 23:39:48 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 19:01:41 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 19:02:04 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +43,7 @@ typedef struct s_command
 
 typedef struct s_pipex_tool
 {
-	int		**pipes;
+	int		*pipes;
 	pid_t	*pid_tab;
 	t_cmd	**commands;
 	int		fd_ot;
@@ -43,7 +55,7 @@ typedef struct s_pipex_tool
  **/
 
 t_ptl	*init_tool(int ac, char **av, char **env);
-int		**init_pipes(int ac);
+int		*init_pipes(int ac);
 t_cmd	**init_commands(int ac, char **av, char **env);
 
 /**
@@ -51,7 +63,7 @@ t_cmd	**init_commands(int ac, char **av, char **env);
  **/
 
 void	*per_ret_null(char *str);
-void	*free_pipes_arr_n_per(int **trash, int signal, char *msg);
+void	*free_pipes_arr_n_per(int *trash, char *msg);
 void	*free_t_cmds_n_per(t_cmd **cmd, int nb_elem, char *msg);
 void	*free_t_cmd_n_per(t_cmd *cmd, char *msg);
 
@@ -78,4 +90,9 @@ void	*clean_t_ptl_ret_null(t_ptl *dst);
 void	check_pid(pid_t pid, t_ptl *tool);
 void	free_t_cmd(t_cmd *cmd);
 
+/**
+ * clean pipes
+ **/
+
+void	close_pipes(int *pipes_tab);
 #endif

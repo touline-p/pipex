@@ -6,7 +6,7 @@
 /*   By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 13:20:00 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/09 21:09:16 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/10 15:02:11 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, fd);
+	write(fd, &c, 1);
 }

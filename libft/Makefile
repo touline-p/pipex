@@ -1,8 +1,8 @@
 NAME	=	libft.a
 
-CC	=	gcc
+CC	=	cc
 
-CFLAGS	=	-Werror -Wall -Wextra -g
+CFLAGS	=	-Werror -Wall -Wextra 
 
 AR	= 	ar
 
@@ -82,7 +82,9 @@ clean	:
 fclean	:	clean
 	-rm $(NAME)
 
-re	:	fclean all
+re	:	
+	make fclean
+	make all
 
 bonus	:	$(BOBJS) $(OBJS) $(HEADER)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS) $(BOBJS)

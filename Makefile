@@ -6,14 +6,14 @@
 #    By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 03:31:03 by bpoumeau          #+#    #+#              #
-#    Updated: 2023/01/09 18:18:05 by bpoumeau         ###   ########lyon.fr    #
+#    Updated: 2023/01/11 15:35:40 by bpoumeau         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
 CC := cc
-FLAGS := -fsanitize=address -g3 -Wall -Wextra -Werror -Iincludes
+FLAGS :=   -Wall -Wextra -Werror -Iincludes
 
 HEADER := includes/pipex.h
 
@@ -24,6 +24,7 @@ FILE := main.c \
 	init_pipes.c \
 	parse_path.c \
 	perr_utils.c \
+	close_pipes.c \
 	wait.c
 
 SRCS := $(addprefix srcs/, $(FILE))
@@ -41,7 +42,7 @@ obj/%.o: srcs/%.c $(HEADER)
 	$(CC) $(FLAGS) -c $< -o $@ -I includes
 
 $(LIBS): 
-	make -C libft
+	make re -C libft
 	cp libft/libft.h includes/
 	cp libft/libft.a includes/
 	
@@ -49,7 +50,7 @@ clean:
 	make fclean -C libft
 	rm includes/libft.h
 	rm includes/libft.a
-	rm -f $(OBJ)
+	rm $(OBJ)
 
 fclean: clean 
 	rm -f $(NAME)
