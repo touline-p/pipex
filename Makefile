@@ -6,7 +6,7 @@
 #    By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 03:31:03 by bpoumeau          #+#    #+#              #
-#    Updated: 2023/01/11 15:35:40 by bpoumeau         ###   ########lyon.fr    #
+#    Updated: 2023/01/11 15:56:17 by bpoumeau         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,13 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+gitting :
+	make
+	make fclean
+	git add *
+	git commit
+	git push
 
 normy:
 	norminette $(SRCS) $(HEADER)

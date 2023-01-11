@@ -6,13 +6,13 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 16:21:52 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/11 14:47:02 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:54:34 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	wait_tab_pid(pid_t *tab)
+void	wait_arr_pid(pid_t *tab)
 {
 	int	i;
 
@@ -57,7 +57,7 @@ void	free_t_cmds(t_cmd **commands)
 void	*clean_t_ptl_ret_null(t_ptl *trash)
 {
 	free(trash->pipes);
-	free(trash->pid_tab);
+	free(trash->pid_arr);
 	free_t_cmds(trash->commands);
 	free(trash);
 	return (NULL);

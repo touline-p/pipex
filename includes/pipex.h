@@ -6,7 +6,7 @@
 /*   By: bpoumeau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:19:55 by bpoumeau          #+#    #+#             */
-/*   Updated: 2023/01/11 14:47:04 by bpoumeau         ###   ########lyon.fr   */
+/*   Updated: 2023/01/11 15:54:11 by bpoumeau         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_command
 typedef struct s_pipex_tool
 {
 	int		*pipes;
-	pid_t	*pid_tab;
+	pid_t	*pid_arr;
 	t_cmd	**commands;
 	int		fd_ot;
 	int		fd_in;
@@ -85,7 +85,7 @@ void	exec_unic_cmd(t_ptl *tool, char **env);
  * wait n clean
  **/
 
-void	wait_tab_pid(pid_t *tab);
+void	wait_arr_pid(pid_t *tab);
 void	*clean_t_ptl_ret_null(t_ptl *dst);
 void	check_pid(pid_t pid, t_ptl *tool);
 void	free_t_cmd(t_cmd *cmd);
