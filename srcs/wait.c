@@ -57,7 +57,6 @@ void	free_t_cmds(t_cmd **commands)
 void	*clean_t_ptl_ret_null(t_ptl *trash)
 {
 	free(trash->pipes);
-	free(trash->pid_arr);
 	free_t_cmds(trash->commands);
 	free(trash);
 	return (NULL);

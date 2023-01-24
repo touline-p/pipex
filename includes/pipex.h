@@ -44,7 +44,6 @@ typedef struct s_command
 typedef struct s_pipex_tool
 {
 	int		*pipes;
-	pid_t	*pid_arr;
 	t_cmd	**commands;
 	int		fd_ot;
 	int		fd_in;
@@ -78,14 +77,11 @@ char	**get_n_split_path(char **env);
  **/
 
 void	exec_cmd(t_ptl *tool, char **env);
-pid_t	child_exec(int *pp_in, int *pp_ot, t_cmd *cmd, char **env);
-void	exec_unic_cmd(t_ptl *tool, char **env);
 
 /**
  * wait n clean
  **/
 
-void	wait_arr_pid(pid_t *tab);
 void	*clean_t_ptl_ret_null(t_ptl *dst);
 void	check_pid(pid_t pid, t_ptl *tool);
 void	free_t_cmd(t_cmd *cmd);

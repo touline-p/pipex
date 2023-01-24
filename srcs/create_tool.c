@@ -28,19 +28,18 @@ t_ptl	*init_tool(int ac, char **av, char **env)
 	dst = malloc(sizeof(t_ptl));
 	if (!dst)
 		return (per_ret_null("can't allocate t_ptl"));
-	dst->pid_arr = malloc(sizeof(pid_t) * (ac - 2));
-	dst->pipes = init_pipes(ac);
-	dst->commands = init_commands(ac, av, env);
-	if (!dst->pid_arr || !dst->pipes || !dst->commands)
-	{
-		perror("init tool");
-		return (clean_t_ptl_ret_null(dst));
-	}
 	dst->fd_in = open(av[1], O_RDONLY);
 	if (dst->fd_in == -1)
 		perror(av[1]);
 	dst->fd_ot = open(av[ac - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (dst->fd_ot == -1)
 		perror(av[ac - 1]);
+	dst->pipes = init_pipes(ac);
+	dst->commands = init_commands(ac, av, env);
+	if (!dst->pipes || !dst->commands)
+	{
+		perror("init tool");
+		return (clean_t_ptl_ret_null(dst));
+	}
 	return (dst);
 }

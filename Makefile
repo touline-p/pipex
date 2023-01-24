@@ -6,74 +6,61 @@
 #    By: bpoumeau <bpoumeau@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/25 03:31:03 by bpoumeau          #+#    #+#              #
-#    Updated: 2023/01/11 15:56:17 by bpoumeau         ###   ########lyon.fr    #
+#    Updated: 2023/01/24 03:10:01 by bpoumeau         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := pipex
 
 CC := cc
-FLAGS :=   -Wall -Wextra -Werror -Iincludes
+FLAGS := -Wall -Wextra -Werror -Iincludes -Ilibft
 
 HEADER := includes/pipex.h
 
-FILE := main.c \
+HLIB :=	libft/libft.h \
+
+FILES := close_pipes.c \
 	create_tool.c \
 	exec_cmd.c \
 	init_commands.c \
 	init_pipes.c \
+	main.c \
 	parse_path.c \
 	perr_utils.c \
-	close_pipes.c \
 	wait.c
 
-SRCS := $(addprefix srcs/, $(FILE))
-OBJ := $(addprefix obj/, $(FILE:.c=.o))
+SRC := $(addprefix srcs/, $(FILES))
 
-LIBS := includes/libft.a \
-	includes/libft.h
+OBJ := $(addprefix obj/, $(FILES:.c=.o))
 
-all: $(NAME)
+LIBS = libft/libft.a
+LIB_FLAGS := -Llibft -lft
 
-$(NAME): $(LIBS) $(OBJ) 
-	$(CC) $(FLAGS) -Lincludes -lft -Iincludes $(OBJ) -o $(NAME) 
+all:
+	make -C libft
+	$(MAKE) $(NAME)
 
-obj/%.o: srcs/%.c $(HEADER) 
-	$(CC) $(FLAGS) -c $< -o $@ -I includes
+$(NAME): $(LIBS) $(OBJ)
+	$(CC) $(FLAGS) $(LIB_FLAGS) $(OBJ) -o $(NAME) $(LIBS)
 
-$(LIBS): 
-	make re -C libft
-	cp libft/libft.h includes/
-	cp libft/libft.a includes/
-	
+obj/%.o: srcs/%.c $(HEADER) $(HLIB)
+	mkdir -p ${shell dirname $@}
+	$(CC) $(FLAGS) -c $< -o $@
+
+$(ODIR):
+	mkdir $(ODIR)
+
 clean:
-	make fclean -C libft
-	rm includes/libft.h
-	rm includes/libft.a
-	rm $(OBJ)
+	rm -rf obj/
 
-fclean: clean 
+fclean: clean
 	rm -f $(NAME)
+	make fclean -C libft
 
 re: fclean all
 
-gitting :
-	make
-	make fclean
-	git add *
-	git commit
-	git push
-
 normy:
-	norminette $(SRCS) $(HEADER)
-
-test: $(NAME)
-	./pipex Makefile cat you
-
-test1: $(NAME)
-	./pipex Makefile cat cat you
-
-test2: $(NAME)
-	./pipex Makefile cat cat cat you
+	norminette $(SRC) $(HEADER)
 
 .PHONY: all clean fclean re libclean normy
+

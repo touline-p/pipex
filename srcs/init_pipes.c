@@ -18,12 +18,12 @@ int	*init_pipes(int ac)
 	int	nb_pipes;
 	int	i;
 
-	nb_pipes = ac - 3;
+	nb_pipes = ac - 4;
 	dst = malloc(sizeof(int) * (nb_pipes * 2 + 1));
 	if (!dst)
 		return (per_ret_null("pipes"));
 	i = 0;
-	while (i < nb_pipes - 1)
+	while (i  < nb_pipes * 2)
 	{
 		if (pipe(&dst[i]))
 			return (free_pipes_arr_n_per(dst, "pipes not working"));

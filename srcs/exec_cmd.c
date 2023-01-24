@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-static void	_error_usage(char *str);
+static void		_error_usage(char *str);
 static pid_t	_child_exec(int *pp_in, int *pp_ot, t_cmd *cmd, char **env);
 static pid_t	_first_exec(int fd_in, int *pp_ot, t_cmd *cmd, char **env);
 static pid_t	_last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env);
@@ -28,23 +28,23 @@ static pid_t	_last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env);
 void	exec_cmd(t_ptl *tool, char **env)
 {
 	int	i;
+	int signal;
 
 	i = 0;
-	tool->pid_arr[i] = _first_exec(tool->fd_in, &tool->pipes[i * 2],
+	signal = _first_exec(tool->fd_in, &tool->pipes[i * 2],
 			tool->commands[i], env);
-	check_pid(tool->pid_arr[i++], tool);
-	while (tool->commands[i + 1])
+	i++;
+	while (tool->commands[i + 1] && signal != -2)
 	{
-		tool->pid_arr[i] = _child_exec(&tool->pipes[i * 2 - 2],
+		signal = _child_exec(&tool->pipes[i * 2 - 2],
 				&tool->pipes[i * 2],
 				tool->commands[i], env);
-		check_pid(tool->pid_arr[i++], tool);
+		i++;
 	}
-	tool->pid_arr[i] = _last_exec(&tool->pipes[i * 2 - 2], tool->fd_ot,
-			tool->commands[i], env);
-	check_pid(tool->pid_arr[i + 1], tool);
-	tool->pid_arr[i + 1] = 0;
-	wait_arr_pid(tool->pid_arr);
+	if (signal != -1)
+		_last_exec(&tool->pipes[i * 2 - 2],
+			tool->fd_ot,tool->commands[i], env);
+	waitpid(-1, NULL, 0);
 }
 
 static pid_t	_first_exec(int fd_in, int *pp_ot, t_cmd *cmd, char **env)
