@@ -28,7 +28,7 @@ static pid_t	_last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env);
 void	exec_cmd(t_ptl *tool, char **env)
 {
 	int	i;
-	int signal;
+	int	signal;
 
 	i = 0;
 	signal = _first_exec(tool->fd_in, &tool->pipes[i * 2],
@@ -43,7 +43,8 @@ void	exec_cmd(t_ptl *tool, char **env)
 	}
 	if (signal != -1)
 		_last_exec(&tool->pipes[i * 2 - 2],
-			tool->fd_ot,tool->commands[i], env);
+			tool->fd_ot,
+			tool->commands[i], env);
 	waitpid(-1, NULL, 0);
 }
 
@@ -120,5 +121,3 @@ static void	_error_usage(char *str)
 		ft_putendl_fd(": permission denied", 2);
 	exit(errno);
 }
-
-

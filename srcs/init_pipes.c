@@ -23,7 +23,7 @@ int	*init_pipes(int ac)
 	if (!dst)
 		return (per_ret_null("pipes"));
 	i = 0;
-	while (i  < nb_pipes * 2)
+	while (i < nb_pipes * 2)
 	{
 		if (pipe(&dst[i]))
 			return (free_pipes_arr_n_per(dst, "pipes not working"));
