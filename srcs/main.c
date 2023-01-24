@@ -23,14 +23,13 @@ int	main(int ac, char **av, char **env)
 		main_eu("args number");
 		return (1);
 	}
-	close(2);
 	tool = init_tool(ac, av, env);
 	if (!tool)
 	{
 		main_eu("Error initializing t_ptl");
 		return (1);
 	}
-	exec_cmd(tool, env);
+	exec_cmd(ac, tool, env);
 	clean_t_ptl_ret_null(tool);
 	exit(0);
 }

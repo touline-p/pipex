@@ -62,12 +62,8 @@ void	*clean_t_ptl_ret_null(t_ptl *trash)
 	return (NULL);
 }
 
-void	check_pid(pid_t pid, t_ptl *tool)
+void	wait_this(int ac)
 {
-	if (pid == -1)
-	{
-		perror("fork unsucessfull");
-		clean_t_ptl_ret_null(tool);
-		exit(errno);
-	}
+	while (ac--)
+		waitpid(-1, NULL, 0);
 }

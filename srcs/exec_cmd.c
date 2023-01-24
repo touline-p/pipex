@@ -25,7 +25,7 @@ static pid_t	_last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env);
  * to wait for them in wait_arr_pid.
  **/
 
-void	exec_cmd(t_ptl *tool, char **env)
+void	exec_cmd(int ac, t_ptl *tool, char **env)
 {
 	int	i;
 	int	signal;
@@ -41,11 +41,13 @@ void	exec_cmd(t_ptl *tool, char **env)
 				tool->commands[i], env);
 		i++;
 	}
-	if (signal != -1)
+	if (signal != -2)
 		_last_exec(&tool->pipes[i * 2 - 2],
 			tool->fd_ot,
 			tool->commands[i], env);
-	waitpid(-1, NULL, 0);
+	if (signal == -2)
+		perror("forks");
+	wait_this(ac - 3);
 }
 
 static pid_t	_first_exec(int fd_in, int *pp_ot, t_cmd *cmd, char **env)
@@ -53,8 +55,10 @@ static pid_t	_first_exec(int fd_in, int *pp_ot, t_cmd *cmd, char **env)
 	pid_t	pid;
 
 	if (fd_in == -1)
-		return (-2);
+		return (0);
 	pid = fork();
+	if (pid == -1)
+		return (-2);
 	if (pid == 0)
 	{
 		dup2(fd_in, STDIN_FILENO);
@@ -77,6 +81,8 @@ static pid_t	_last_exec(int *pp_in, int fd_ot, t_cmd *cmd, char **env)
 		return (-2);
 	close(pp_in[1]);
 	pid = fork();
+	if (pid == -1)
+		return (0);
 	if (pid == 0)
 	{
 		dup2(pp_in[0], STDIN_FILENO);
@@ -96,6 +102,8 @@ static pid_t	_child_exec(int *pp_in, int *pp_ot, t_cmd *cmd, char **env)
 	pid_t	pid;
 
 	pid = fork();
+	if (pid == -1)
+		return (-2);
 	if (pid == 0)
 	{
 		dup2(pp_in[0], STDIN_FILENO);

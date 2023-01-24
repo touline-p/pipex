@@ -76,15 +76,15 @@ char	**get_n_split_path(char **env);
  * exec command
  **/
 
-void	exec_cmd(t_ptl *tool, char **env);
+void	exec_cmd(int ac, t_ptl *tool, char **env);
 
 /**
  * wait n clean
  **/
 
 void	*clean_t_ptl_ret_null(t_ptl *dst);
-void	check_pid(pid_t pid, t_ptl *tool);
 void	free_t_cmd(t_cmd *cmd);
+void	wait_this(int ac);
 
 /**
  * clean pipes
